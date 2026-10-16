@@ -34,8 +34,8 @@ public class caculater1 {
 
         double totalInterest = (monthlyPayment * numberOfPayments) - principal;
 
-        System.out.println("monthly payment: $" + monthlyPayment);
-        System.out.println("Total Interest: $" + totalInterest);
+        System.out.printf("Monthly payment: $ %.2f%n" , monthlyPayment);
+        System.out.printf("Total Interest: $%.2f%n" , totalInterest);
 
 
      }
