@@ -31,6 +31,7 @@ public class Main {
         books[18] = new Book(19, "978-0000000019", "The Last Detective");
         books[19] = new Book(20, "978-0000000020", "Beyond the Mountains");
 
+        //Displays the home screen
         while (true){
             System.out.println("Book Store Home Screen");
             System.out.println("1. Show Available Books");
@@ -40,13 +41,14 @@ public class Main {
 
             int userInput = scanner.nextInt();
 
+           //Shows all available books
             switch (userInput){
                 case 1:
                     for (int i = 0; i < books.length; i++) {
                         if (books[i].isCheckedout() == false) {
                             System.out.println(books[i].getId() + " " + books[i].getIsbn() + " " + books[i].getTitle());
                         }
-                    }
+                    }//check out the selected books
                     System.out.println("Enter the ID of the book you want to check out:");
                     int bookId = scanner.nextInt();
 
@@ -62,7 +64,8 @@ public class Main {
                     }
                     break;
 
-                case 2:
+                //shows all checked out books
+                    case 2:
                     for (int i = 0; i < books.length; i++) {
                         if (books[i]. isCheckedout() == true) {
                             System.out.println(books[i].getId() + " " + books[i].getIsbn() + " " + books[i].getTitle() + " " + books[i].getCheckedOutTo());
@@ -72,6 +75,7 @@ public class Main {
                     System.out.println("X - Go back to home screen");
                     System.out.println("Enter your choice");
 
+                    //Checks the selected book back in
                     scanner.nextLine();
                     String choice = scanner.nextLine();
                     if (choice.equalsIgnoreCase("C")) {
@@ -80,11 +84,11 @@ public class Main {
 
                         for (int i = 0; i < books.length; i++){
                             if (books[i].getId() == checkInId) {
-                                books[i].checkin();
+                                books[i].checkIn();
                             }
                         }
                     }
-
+                    //Exit the program
                     break;
                 case 3:
                     return;

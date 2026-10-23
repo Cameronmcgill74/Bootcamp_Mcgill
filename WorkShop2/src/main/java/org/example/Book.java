@@ -59,7 +59,7 @@ public class Book {
         isCheckedout = true;
         checkedOutTo = name;
     }
-    public void checkin() {
+    public void checkIn() {
         isCheckedout = false;
         checkedOutTo = "";
     }
