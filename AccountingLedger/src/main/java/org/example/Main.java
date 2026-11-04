@@ -143,6 +143,7 @@ public class Main {
                                     System.out.println("3) Year to date");
                                     System.out.println("4) Previous Year");
                                     System.out.println("5) Search by vender");
+                                    System.out.println("6) Custom Search");
                                     System.out.println("0) Back to Ledger");
                                     System.out.println("Enter choice: ");
 
@@ -249,6 +250,49 @@ public class Main {
                                             }
                                             break;
 
+                                        case "6":
+                                            System.out.print("=== CUSTOM SEARCH ===");
+                                            System.out.print("Enter Start Date (YYYY-MM-DD");
+                                            String startDate = scanner.nextLine();
+                                            System.out.print("Enter End Date (YYYY-MM-DD): ");
+                                            String endDate = scanner.nextLine();
+                                            System.out.print("Enter Description: ");
+                                            String searchDescription = scanner.nextLine();
+                                            System.out.print("Enter Vendor: ");
+                                            String searchVendor = scanner.nextLine();
+                                            System.out.print("Enter Amount: ");
+                                            String searchAmount = scanner.nextLine();
+                                            for (Transaction items : transactions) {
+                                                if (!startDate.isEmpty() &&
+                                                    items.getDate().isBefore(LocalDate.parse(startDate))) {
+                                                    continue;
+                                                }
+                                                if (!endDate.isEmpty() &&
+                                                        items.getDate().isAfter(LocalDate.parse(endDate))) {
+                                                    continue;
+                                                }
+                                                if (!searchDescription.isEmpty() &&
+                                                        !items.getDescription().equalsIgnoreCase(searchDescription)) {
+                                                    continue;
+                                                }
+                                                if (!searchVendor.isEmpty() &&
+                                                        !items.getVendor().equalsIgnoreCase(searchVendor)) {
+                                                    continue;
+                                                }
+                                                if (!searchAmount.isEmpty() &&
+                                                        items.getAmount() !=Double.parseDouble(searchAmount)) {
+                                                    continue;
+                                                }
+                                                System.out.println(
+                                                        items.getDate() + "|" +
+                                                        items.getTime() + "|" +
+                                                        items.getDescription() + "|" +
+                                                        items.getVendor() + "|$" +
+                                                        items.getAmount()
+                                                );
+
+                                            }
+                                            break;
                                         case "0":
                                             reportsRunning = false;
                                             break;
