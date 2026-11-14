@@ -2,6 +2,7 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
+
 public class Dealership {
     private String name;
     private String address;

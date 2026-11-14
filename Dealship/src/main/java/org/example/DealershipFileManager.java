@@ -7,7 +7,7 @@ public class DealershipFileManager {
         Dealership dealership = null;
         try {
             BufferedReader reader = new BufferedReader(
-                    new FileReader("inventory.csv"));
+                    new FileReader("src/main/inventory.csv"));
             String line = reader.readLine();
             String[] parts =  line.split("\\|");
             dealership = new Dealership(parts[0], parts[1], parts[2]);
@@ -30,13 +30,14 @@ public class DealershipFileManager {
             reader.close();
         } catch (IOException e) {
             System.out.println("Error reading inventory file.");
+            e.printStackTrace();
         }
         return  dealership;
     }
     public void saveDealership(Dealership dealership) {
         try{
             BufferedWriter writer = new BufferedWriter(
-                    new FileWriter("inventory.csv"));
+                    new FileWriter("src/main/inventory.csv"));
             writer.write(dealership.getName() + "|" +
                     dealership.getAddress() + "|" +
                     dealership.getPhone());
