@@ -47,4 +47,24 @@ public class LeaseContract extends Contract {
         double monthlyPayment = totalPrice * monthlyRate * rateFactor / (rateFactor - 1);
         return monthlyPayment;
     }
+
+    @Override
+    public String toString() {
+        return "LEASE|" + getDate() + "|" +
+        getCustomerName() + "|" +
+        getCustomerEmail() + "|" +
+        getVehicleSold().getVin() + "|" +
+        getVehicleSold().getYear() + "|" +
+        getVehicleSold().getMake() + "|" +
+        getVehicleSold().getModel() + "|" +
+        getVehicleSold().getVehicleType() + "|" +
+        getVehicleSold().getColor() + "|" +
+        getVehicleSold().getOdometer() + "|" +
+        getVehicleSold().getPrice() + "|" +
+        getExpectedEndingValue() + "|" +
+        getLeaseFee() + "|" +
+        getTotalPrice() + "|" +
+        getMonthlyPayment();
+
+    }
 }

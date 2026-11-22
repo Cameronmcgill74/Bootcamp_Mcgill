@@ -3,6 +3,7 @@ import jdk.swing.interop.SwingInterOpUtils;
 
 import java.math.BigDecimal;
 import java.sql.SQLOutput;
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.List;
@@ -31,6 +32,8 @@ public class UserInterface {
             System.out.println("7. List all vehicles");
             System.out.println("8. add a vehicle");
             System.out.println("9. Remove a vehicle");
+            System.out.println("10. sell a vehicle");
+            System.out.println("11. Lease a vehicle");
             System.out.println("99. Exit");
             System.out.print("Enter your choice");
 
@@ -70,6 +73,12 @@ public class UserInterface {
                     break;
                 case 9:
                     processRemoveVehicleRequest();
+                    break;
+                case 10:
+                    processSellVehicleRequest();
+                    break;
+                case 11:
+                    processLeaseVehicleRequest();
                     break;
                 case 99:
                     System.out.println("Goodbye!");
@@ -227,5 +236,94 @@ public class UserInterface {
             scanner.nextLine();
         }
     }
+private void processSellVehicleRequest(){
+    System.out.println("Enter the VIN of the vehicle to sell:");
+    String vin = scanner.nextLine();
+    Vehicle vehicle = dealership.getVehicleByVin(vin);
 
+    if (vehicle == null) {
+        System.out.println("Vehicle not found.");
+        return;
+    }
+    System.out.println("Vehicle found");
+    System.out.println(vehicle);
+    System.out.println("Enter customer name:");
+    String customerName = scanner.nextLine();
+    System.out.println("Enter customer email:");
+    String customerEmail = scanner.nextLine();
+    System.out.println("Does the customer want financing? (yes/no):");
+    String financeAnswer = scanner.nextLine();
+
+    boolean financeOption = financeAnswer.equalsIgnoreCase("yes");
+    SalesContract contract = new SalesContract(
+            LocalDate.now().toString(),
+            customerName,
+            customerEmail,
+            vehicle,
+            0.0,
+            0.0,
+            0.0,
+            financeOption
+    );
+    System.out.println(contract);
+    ContractDataManager.saveContract(contract);
+    //Removes the sold vehicle from inventory
+    dealership.removeVehicle(vehicle);
+    // saves the updated inventory
+    DealershipFileManager fileManager = new DealershipFileManager();
+    fileManager.saveDealership(dealership);
+
+    System.out.println("Vehicle sold successfully!");
+}
+private void processLeaseVehicleRequest(){
+    System.out.println("Enter the vin of the vehicle to lease:");
+    String vin = scanner.nextLine();
+    //Find the vehicle in inventory
+    Vehicle vehicle = dealership.getVehicleByVin(vin);
+
+    //Check if the vehicle exist
+    if (vehicle == null) {
+        System.out.println("Vehicle not found.");
+        return;
+    }
+    System.out.println("vehicle found:");
+    System.out.println(vehicle);
+
+    int currentYear = LocalDate.now().getYear();
+    int vehicleAge = currentYear - vehicle.getYear();
+
+    if (vehicleAge > 3) {
+        System.out.println("Vehicle is too old to lease");
+        return;
+    }
+    System.out.println("Enter customer name:");
+    String customerName = scanner.nextLine();
+
+    System.out.println("Enter customer email:");
+    String customerEmail = scanner.nextLine();
+    //Calculate the leae values
+    double vehiclePrice = vehicle.getPrice().doubleValue();
+    double expectedEndingValue = vehiclePrice * 0.50;
+    double leaseFee = vehiclePrice * 0.07;
+
+    LeaseContract contract = new LeaseContract(
+            LocalDate.now().toString(),
+            customerName,
+            customerEmail,
+            vehicle,
+            expectedEndingValue,
+            leaseFee
+    );
+//display the lease contract
+    System.out.println(contract);
+    //save the lease contract
+    ContractDataManager.saveContract(contract);
+    //remove the leased vehicle from inventory
+    dealership.removeVehicle(vehicle);
+    //Save the updted inventory
+    DealershipFileManager fileManager = new DealershipFileManager();
+    fileManager.saveDealership(dealership);
+// confirm lease
+    System.out.println("Vehicle leased successfully!");
+}
 }

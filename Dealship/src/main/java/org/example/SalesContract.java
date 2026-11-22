@@ -91,6 +91,27 @@ public class SalesContract extends Contract {
         // return the monthly payment
         return monthlyPayment;
     }
+    @Override
+    public String toString() {
+        return "SALE|" + getDate() + "|" +
+                getCustomerName() + "|" +
+                getCustomerEmail() + "|" +
+                getVehicleSold().getVin() + "|" +
+                getVehicleSold().getYear() + "|" +
+                getVehicleSold().getMake() + "|" +
+                getVehicleSold().getModel() + "|" +
+                getVehicleSold().getVehicleType() + "|" +
+                getVehicleSold().getColor() + "|" +
+                getVehicleSold().getOdometer() + "|" +
+                getVehicleSold().getPrice() + "|" +
+                getSalesTaxAmount()  + "|" +
+                getRecordingFee()  + "|" +
+                getProcessingFee()  + "|" +
+                getTotalPrice()  + "|" +
+                isFinanceOption()  + "|" +
+                getMonthlyPayment() ;
+
+    }
     }
 
 

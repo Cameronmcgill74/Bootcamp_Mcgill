@@ -87,10 +87,15 @@ public class Vehicle {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    //Override toString method to display vehicle details
-        @Override
-        public String toString()  {
-            return vin + "|" + year + "|" + make + "|" + model + "|" + vehicleType + "|" + color + "|" + odometer + "miles | $" + price;
-        }
-
+    @Override
+    public  String toString() {
+        return  vin + "|" +
+                year + "|" +
+                make + "|" +
+                model + "|" +
+                vehicleType + "|" +
+                color + "|" +
+                odometer + "|" +
+                price;
+    }
 }
